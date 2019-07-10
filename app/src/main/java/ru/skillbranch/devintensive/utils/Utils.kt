@@ -11,4 +11,12 @@ object Utils {
                 Pair(l[0], l[1])
         }
     }
+
+    fun transliteration(fullname: String, divider: String = " "): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun toInitials(firstName: String?, lastName: String?): String {
+        return ""
+    }
 }
