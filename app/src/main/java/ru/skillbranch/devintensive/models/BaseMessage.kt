@@ -18,11 +18,26 @@ abstract class BaseMessage(
             chat: Chat,
             date: Date = Date(),
             type: String = "text",
-            payload: Any?
+            payload: Any?,
+            isIncoming: Boolean = false
         ): BaseMessage {
             return when (type) {
-                "image" -> ImageMessage("${lastId++}", from, chat, image = payload as String, date = date)
-                else -> TextMessage("${lastId++}", from, chat, text = payload as String, date = date)
+                "image" -> ImageMessage(
+                    "${lastId++}",
+                    from,
+                    chat,
+                    image = payload as String,
+                    date = date,
+                    isIncoming = isIncoming
+                )
+                else -> TextMessage(
+                    "${lastId++}",
+                    from,
+                    chat,
+                    text = payload as String,
+                    date = date,
+                    isIncoming = isIncoming
+                )
             }
         }
     }
