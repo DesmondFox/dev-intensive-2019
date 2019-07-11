@@ -19,3 +19,10 @@ fun String.truncate(visibleCount: Int = 16): String {
     truncated += if (trCount < refCount) "..." else ""
     return truncated
 }
+
+fun String.stripHtml(): String {
+    return this
+        .replace(Regex("""<[^>]*>"""), "")  // HTML tags
+        .replace(Regex("""\&[A-z0-9#]+\;"""), "") // escape последовательности
+        .replace(Regex("""\ {2,}"""), " ")  // 2 и более пробелы
+}
