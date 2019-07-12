@@ -23,7 +23,3 @@ fun User.toUserView(): UserView {
         status = status
     )
 }
-
-fun Date.humanizeDiff(date: Date = Date()): String {
-    return ""
-}
