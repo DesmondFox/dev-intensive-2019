@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         tv_text.text = benderObj.askQuestion()
         iv_send.setOnClickListener(this)
+        Log.d(javaClass.name, "onCreate")
 
     }
 
@@ -39,6 +40,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         outState?.putString("STATUS", benderObj.status.name)
         outState?.putString("QUESTION", benderObj.question.name)
         Log.d(javaClass.name, "onSaveInstanceState")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(javaClass.name, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(javaClass.name, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(javaClass.name, "onDestroy")
     }
 
     override fun onClick(v: View?) {
