@@ -30,7 +30,7 @@ class Bender(
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion() = PROFESSION
         },
-        PROFESSION("Назови мою професию?", listOf("сгибальщик", "bender")){
+        PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")){
             override fun nextQuestion() = MATERIAL
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")){
