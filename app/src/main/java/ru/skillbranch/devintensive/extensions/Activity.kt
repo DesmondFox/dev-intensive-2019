@@ -12,14 +12,6 @@ fun Activity.hideKeyboard() {
     }
 }
 
-//fun Activity.isKeyboardClosed(): Boolean {
-//
-//}
-
-fun Rect.format(): String {
-    return "${this.top}:${this.height()}:${this.bottom}"
-}
-
 fun Activity.isKeyboardOpen(): Boolean {
     val view = window.decorView.rootView
     val visibleRect = Rect()
