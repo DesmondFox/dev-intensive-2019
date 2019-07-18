@@ -11,3 +11,31 @@ fun Activity.hideKeyboard() {
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
+
+//fun Activity.isKeyboardClosed(): Boolean {
+//
+//}
+
+fun Rect.format(): String {
+    return "${this.top}:${this.height()}:${this.bottom}"
+}
+
+fun Activity.isKeyboardOpen(): Boolean {
+    val view = window.decorView.rootView
+    val visibleRect = Rect()
+    view.getWindowVisibleDisplayFrame(visibleRect)
+
+
+    // Костыль! Обычно тесты проходят без навбара, а в телефонах он есть часто.
+    // А значит введем некую переменную высоты некоего навбара
+    val floatingNavBarHeight = 200
+    val fullRect = Rect()
+    view.getLocalVisibleRect(fullRect)
+    fullRect.also {
+        it.top = visibleRect.top
+        it.bottom -= floatingNavBarHeight
+    }
+    return visibleRect.height() < fullRect.height()
+}
+
+fun Activity.isKeyboardClosed(): Boolean = !isKeyboardOpen()
