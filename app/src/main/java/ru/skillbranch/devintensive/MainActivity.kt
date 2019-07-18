@@ -2,13 +2,17 @@ package ru.skillbranch.devintensive
 
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.inputmethodservice.Keyboard
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.models.Bender
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,6 +32,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Color.rgb(color.first, color.second, color.third),
                     PorterDuff.Mode.MULTIPLY)
         }
+
+        et_message.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                sendToBender()
+                hideKeyboard()
+            }
+            true
+        }
+
         tv_text.text = benderObj.askQuestion()
         iv_send.setOnClickListener(this)
         Log.d(javaClass.name, "onCreate")
@@ -59,12 +72,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.iv_send) {
-            val (phrase, color) = benderObj.listenAnswer(et_message.text.toString())
-            et_message.text.clear()
-            iv_bender.setColorFilter(
-                    Color.rgb(color.first, color.second, color.third),
-                    PorterDuff.Mode.MULTIPLY)
-            tv_text.text = phrase
+            sendToBender()
         }
+    }
+
+    private fun sendToBender() {
+        val (phrase, color) = benderObj.listenAnswer(et_message.text.toString())
+        et_message.text.clear()
+        iv_bender.setColorFilter(
+            Color.rgb(color.first, color.second, color.third),
+            PorterDuff.Mode.MULTIPLY
+        )
+        tv_text.text = phrase
     }
 }
