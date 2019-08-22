@@ -2,7 +2,7 @@ package ru.skillbranch.devintensive.models
 
 data class Profile(
     val firstName: String,
-    val lastname: String,
+    val lastName: String,
     val about: String,
     val repository: String,
     val rating: Int = 0,
@@ -15,7 +15,7 @@ data class Profile(
         "nickName" to nickName,
         "rank" to rank,
         "firstName" to firstName,
-        "lastname" to lastname,
+        "lastName" to lastName,
         "about" to about,
         "repository" to repository,
         "rating" to rating,

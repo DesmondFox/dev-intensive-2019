@@ -44,7 +44,7 @@ class ProfileActivity : AppCompatActivity() {
             "nickName" to tv_nick_name,
             "rank" to tv_rank,
             "firstName" to et_first_name,
-            "lastname" to et_last_name,
+            "lastName" to et_last_name,
             "about" to et_about,
             "repository" to et_repository,
             "rating" to tv_rating,
@@ -85,7 +85,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun showCurrentMode(editMode: Boolean) {
         val info = viewFields
-            .filter { setOf("firstName", "lastname", "about", "repository").contains(it.key) }
+            .filter { setOf("firstName", "lastName", "about", "repository").contains(it.key) }
         for ((_, v) in info) {
             v as EditText
             v.isFocusable = editMode
@@ -119,7 +119,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun saveProfileInfo() {
         Profile(
             firstName = et_first_name.text.toString(),
-            lastname = et_last_name.text.toString(),
+            lastName = et_last_name.text.toString(),
             about = et_about.text.toString(),
             repository = et_repository.text.toString()
         ).apply {
