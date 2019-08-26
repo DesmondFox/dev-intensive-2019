@@ -1,5 +1,8 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
+import kotlin.math.roundToInt
+
 object Utils {
     fun parseFullName(fullname: String?): Pair<String?, String?> = when (fullname) {
         null, "", " " -> Pair(null, null)
@@ -82,4 +85,9 @@ object Utils {
 
         return if (initials == "") null else initials
     }
+
+    fun convertDpToPx(context: Context, dp: Float) = (dp * context.resources.displayMetrics.density).roundToInt()
+
+    fun convertPxToDp(context: Context, px: Float) = (px / context.resources.displayMetrics.density).roundToInt()
+
 }
