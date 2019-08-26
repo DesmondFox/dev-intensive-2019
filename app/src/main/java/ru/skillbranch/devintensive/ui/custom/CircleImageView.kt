@@ -6,6 +6,8 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.annotation.Dimension
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.scale
@@ -111,9 +113,26 @@ class CircleImageView @JvmOverloads constructor(
 
         canvas.drawCircle(
             halfWidth,
-            halfHeight,
+              halfHeight,
             radius,
             circleBorderPaint
         )
+    }
+
+    @Dimension
+    fun getBorderWidth() = borderWidth
+
+    fun setborderWidth(@Dimension dp: Int) {
+        borderWidth = Utils.convertDpToPx(context, dp.toFloat())
+    }
+
+    fun getBorderColor() = borderColor
+
+    fun setBorderColor(hex: String) {
+        borderColor = Color.parseColor(hex)
+    }
+
+    fun setBorderColor(@ColorRes colorId: Int) {
+        borderColor = context.getColor(colorId)
     }
 }
