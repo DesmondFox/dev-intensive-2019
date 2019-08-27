@@ -4,14 +4,18 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.utils.InitialsBitmap
 import ru.skillbranch.devintensive.utils.Utils
@@ -65,6 +69,19 @@ class ProfileActivity : AppCompatActivity() {
 
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
+        }
+
+        et_repository.setOnEditorActionListener { v, actionId, event ->
+            Log.d("Editor", "$actionId $event")
+
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (!Utils.isRepositoryUrlValid(v.text.toString())) {
+                    v.error = getString(R.string.profile_error_invalid_repo_addr)
+                    return@setOnEditorActionListener true
+                }
+                hideKeyboard()
+                return@setOnEditorActionListener true
+            } else return@setOnEditorActionListener true
         }
     }
 
@@ -143,6 +160,11 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun saveProfileInfo() {
+        if (!Utils.isRepositoryUrlValid(et_repository.text.toString())) {
+            et_repository.setText("")
+        }
+
+
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),

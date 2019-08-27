@@ -89,9 +89,41 @@ object Utils {
         return if (initials == "") null else initials
     }
 
-    fun convertDpToPx(context: Context, dp: Float) = (dp * context.resources.displayMetrics.density).roundToInt()
+    fun convertDpToPx(context: Context, dp: Float) =
+        (dp * context.resources.displayMetrics.density).roundToInt()
 
-    fun convertPxToDp(context: Context, px: Float) = (px / context.resources.displayMetrics.density).roundToInt()
+    fun convertPxToDp(context: Context, px: Float) =
+        (px / context.resources.displayMetrics.density).roundToInt()
 
-    fun convertSpTpPx(context: Context, sp: Float) = sp * context.resources.displayMetrics.scaledDensity
+    fun convertSpTpPx(context: Context, sp: Float) =
+        sp * context.resources.displayMetrics.scaledDensity
+
+    fun isRepositoryUrlValid(url: String): Boolean {
+        val invalidNames = setOf(
+            "enterprise",
+            "features",
+            "topics",
+            "collections",
+            "trending",
+            "events",
+            "marketplace",
+            "pricing",
+            "nonprofit",
+            "customer-stories",
+            "security",
+            "login",
+            "join"
+        )
+
+        val ignoreSequence = invalidNames.joinToString(separator = "|")
+        val pattern1 = """^https:\/\/github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
+        val pattern2 = """^https:\/\/www\.github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
+        val pattern3 = """^www\.github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
+        val pattern4 = """^github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
+
+        return url.contains(pattern1) ||
+                url.contains(pattern2) ||
+                url.contains(pattern3) ||
+                url.contains(pattern4)
+    }
 }
