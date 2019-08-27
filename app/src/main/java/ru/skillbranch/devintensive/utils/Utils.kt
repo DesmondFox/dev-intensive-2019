@@ -1,6 +1,8 @@
 package ru.skillbranch.devintensive.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
+import java.util.*
 import kotlin.math.roundToInt
 
 object Utils {
@@ -15,6 +17,7 @@ object Utils {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     fun transliteration(fullname: String, divider: String = " "): String {
         val transMap = mapOf(
             ' ' to divider,
@@ -90,4 +93,5 @@ object Utils {
 
     fun convertPxToDp(context: Context, px: Float) = (px / context.resources.displayMetrics.density).roundToInt()
 
+    fun convertSpTpPx(context: Context, sp: Float) = sp * context.resources.displayMetrics.scaledDensity
 }

@@ -1,10 +1,9 @@
 package ru.skillbranch.devintensive.ui.profile
 
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+import android.graphics.*
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -14,7 +13,10 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.InitialsBitmap
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
+import kotlin.math.roundToInt
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -33,6 +35,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -60,7 +63,7 @@ class ProfileActivity : AppCompatActivity() {
             showCurrentMode(isEditMode)
         }
 
-        btn_switch_theme.setOnClickListener{
+        btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
         }
     }
@@ -77,11 +80,33 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateUI(profile: Profile) {
-        profile.toMap().also {
-            for ((k, v) in viewFields) {
-                v.text = it[k].toString()
-            }
+        val profileDataMap = profile.toMap()
+
+        for ((k, v) in viewFields) {
+            v.text = profileDataMap[k].toString()
         }
+        updateAvatar(profile)
+    }
+
+    private fun updateAvatar(profile: Profile) {
+        val typedValue = TypedValue().also {
+            theme.resolveAttribute(R.attr.colorAccent, it, true)
+        }
+
+        Utils.toInitials(profile.firstName, profile.lastName)
+            ?.let {
+                iv_avatar.setImageBitmap(
+                    InitialsBitmap(
+                        iv_avatar.layoutParams.width,
+                        iv_avatar.layoutParams.height
+                    )
+                        .setInitials(Utils.toInitials(profile.firstName, profile.lastName))
+                        .setTextColor(Color.WHITE)
+                        .setTextSize(Utils.convertSpTpPx(this, 30F))
+                        .setBackgroundColor(typedValue.data)
+                        .buildBitmap()
+                )
+            }
     }
 
     private fun showCurrentMode(editMode: Boolean) {
