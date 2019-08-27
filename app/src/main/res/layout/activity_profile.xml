@@ -39,8 +39,9 @@
                     android:layout_width="@dimen/avatar_round_size"
                     android:layout_height="@dimen/avatar_round_size"
                     android:layout_centerHorizontal="true"
-                    app:cv_borderWidth="2dp"
-                    android:src="@drawable/profile_bg" />
+                    android:padding="1dp"
+                    android:src="@drawable/profile_bg"
+                    app:cv_borderWidth="2dp" />
 
             <ImageButton
                     android:id="@+id/btn_edit"

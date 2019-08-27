@@ -8,9 +8,7 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
-import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.scale
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.utils.Utils
 import kotlin.math.min
@@ -90,9 +88,12 @@ class CircleImageView @JvmOverloads constructor(
         val halfWidth = width / 2F
         val halfHeight = height / 2F
 
-        val min = min(width, height)
+        val usefulWidth = width - paddingStart - paddingEnd
+        val usefulheight = height - paddingTop - paddingBottom
+
+        val min = min(usefulWidth, usefulheight)
         val radius = min / 2F
-        val bitmap = getBitmapFromResource(width, height)
+        val bitmap = getBitmapFromResource(usefulWidth, usefulheight)
         bitmap ?: return
 
         // this is bad practice (работает - не трожь)
