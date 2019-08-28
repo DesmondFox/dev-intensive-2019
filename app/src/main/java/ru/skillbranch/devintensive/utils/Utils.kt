@@ -98,7 +98,8 @@ object Utils {
     fun convertSpTpPx(context: Context, sp: Float) =
         sp * context.resources.displayMetrics.scaledDensity
 
-    fun isRepositoryUrlValid(url: String): Boolean {
+    fun isRepositoryUrlValid(url: String?): Boolean {
+        url ?: return false
         val invalidNames = setOf(
             "enterprise",
             "features",

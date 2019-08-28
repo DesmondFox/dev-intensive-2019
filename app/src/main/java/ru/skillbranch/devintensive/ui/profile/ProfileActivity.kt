@@ -2,25 +2,22 @@ package ru.skillbranch.devintensive.ui.profile
 
 import android.graphics.*
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
-import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
-import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.utils.InitialsBitmap
 import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
-import kotlin.math.roundToInt
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -39,7 +36,6 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -71,18 +67,21 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.switchTheme()
         }
 
-        et_repository.setOnEditorActionListener { v, actionId, event ->
-            Log.d("Editor", "$actionId $event")
+        et_repository.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
 
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (!Utils.isRepositoryUrlValid(v.text.toString())) {
-                    v.error = getString(R.string.profile_error_invalid_repo_addr)
-                    return@setOnEditorActionListener true
-                }
-                hideKeyboard()
-                return@setOnEditorActionListener true
-            } else return@setOnEditorActionListener true
-        }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("OnTextChanged", "$s $start $before")
+                if (!Utils.isRepositoryUrlValid(s.toString())) {
+                    et_repository.error = getString(R.string.profile_error_invalid_repo_url)
+                } else
+                    et_repository.error = null
+            }
+        })
     }
 
     private fun initViewModel() {
