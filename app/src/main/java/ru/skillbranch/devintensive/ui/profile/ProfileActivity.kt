@@ -163,7 +163,6 @@ class ProfileActivity : AppCompatActivity() {
             et_repository.setText("")
         }
 
-
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),

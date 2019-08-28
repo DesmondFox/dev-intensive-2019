@@ -117,10 +117,10 @@ object Utils {
         )
 
         val ignoreSequence = invalidNames.joinToString(separator = "|")
-        val pattern1 = """^https:\/\/github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
-        val pattern2 = """^https:\/\/www\.github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
-        val pattern3 = """^www\.github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
-        val pattern4 = """^github\.com\/(?!$ignoreSequence)[A-z0-9]+$""".toRegex()
+        val pattern1 = """^https:\/\/github\.com\/(?!$ignoreSequence)[A-z0-9-_]+$""".toRegex()
+        val pattern2 = """^https:\/\/www\.github\.com\/(?!$ignoreSequence)[A-z0-9-_]+$""".toRegex()
+        val pattern3 = """^www\.github\.com\/(?!$ignoreSequence)[A-z0-9-_]+$""".toRegex()
+        val pattern4 = """^github\.com\/(?!$ignoreSequence)[A-z0-9-_]+$""".toRegex()
 
         return url.contains(pattern1) ||
                 url.contains(pattern2) ||
